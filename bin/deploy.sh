@@ -1,9 +1,12 @@
 #!/bin/bash
 set -euo pipefail
 
-NAMESPACE=$(cat "${DIRNAME}/../config.json" | jq -r .namespace)
-APISERVER=$(cat "${DIRNAME}/../config.json" | jq -r .apiserver)
+DIRNAME=$(dirname "$0")
 
-kubectl delete ns "${NAMESPACE}"
-kubectl create ns "${NAMESPACE}"
+NAMESPACE=$(jq -r .namespace < "${DIRNAME}/../config.json")
+APISERVER=$(jq -r .apiserver < "${DIRNAME}/../config.json")
+sh "${DIRNAME}/destroy.sh"
+if ! kubectl get ns "${NAMESPACE}" >/dev/null; then
+    kubectl create ns "${NAMESPACE}"
+fi
 tk apply --tla-str apiserver="${APISERVER}" environments/vcluster/main.jsonnet

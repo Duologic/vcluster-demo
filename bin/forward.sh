@@ -5,12 +5,12 @@ IFS=$'\n\t'
 DIRNAME=$(dirname "$0")
 TEMPFILE=$(mktemp)
 
-NAME=$(cat "${DIRNAME}/../config.json" | jq -r .name)
-NAMESPACE=$(cat "${DIRNAME}/../config.json" | jq -r .namespace)
+NAME=$(jq -r .name < "${DIRNAME}/../config.json")
+NAMESPACE=$(jq -r .namespace < "${DIRNAME}/../config.json")
 
-kubectl -n "${NAMESPACE}" get secrets "${NAME}-0" -o json | jq -r .data.config | base64 -d > "${TEMPFILE}"
+kubectl -n "${NAMESPACE}" get secrets "${NAME}" -o json | jq -r .data.config | base64 -d > "${TEMPFILE}"
 
-kubectl port-forward -n "${NAMESPACE}" "${NAME}-0-0" 8443 >/dev/null &
+kubectl port-forward -n "${NAMESPACE}" "${NAME}-0" 8443 >/dev/null &
 FPID=$!
 echo $FPID
 
