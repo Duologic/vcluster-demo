@@ -8,6 +8,7 @@ There are a few helper scripts in `/bin` that describe the process a bit:
 bin/
 ├── apply.sh    # Applies the vcluster to the host cluster.
 ├── deploy.sh   # Applies the demo to the virtual cluster.
+├── destroy.sh  # Destroys the vcluster (deletes namespace).
 ├── forward.sh  # Sets up the port-forward, used by deploy.sh and k9s.sh.
 ├── init.sh     # Bootstrapping Tanka and various components.
 └── k9s.sh      # Starts k9s on the virtual cluster.
