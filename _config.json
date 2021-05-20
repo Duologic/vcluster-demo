@@ -1,0 +1,6 @@
+{
+  "name": "vcluster",
+  "namespace": "my-vcluster",
+  "apiserver": "https://127.0.0.1",
+  "service_cidr": "10.96.0.0/12"
+}
